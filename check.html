@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="stylesheet" href="">
+    <script src="jquery.js"></script>
+</head>
+
+<body>
+    <button type="button" id="ckbCheckAll">SelectAll</button>
+    <button type="button" id="addMore">AddCheck</button>
+    <button type="button" id="removeBtn">Delcheck</button>
+    <p id="checkBoxes">
+        <div id="one">
+            <input type="checkbox" class="checkBoxClass cbone" name="number" value="one" data-id="cbone" id="Checkbox1" />one
+        </div>
+        <div id="two">
+            <input type="checkbox" class="checkBoxClass cbtwo" name="number" value="two" data-id="cbtwo" id="Checkbox2" />two
+        </div>
+        <div id="three">
+            <input type="checkbox" class="checkBoxClass cbthree" name="number" value="three" data-id="cbthree" id="Checkbox3" />three
+        </div>
+        <div id="four">
+            <input type="checkbox" class="checkBoxClass cbfour" name="number" value="four" data-id="cbfour" id="Checkbox4" />four
+        </div>
+        <div id="five">
+            <input type="checkbox" class="checkBoxClass cbfive" name="number" value="five" data-id="cbfive" id="Checkbox5" />five
+        </div>
+        <div id="moreFields"></div>
+        <button id="status">Status</button>
+    </p>
+    <script type="text/javascript">
+    $(document).ready(function() {
+
+        $("#ckbCheckAll").click(function() {
+            var attrVal = $('.checkBoxClass').prop('checked');
+            if (!attrVal) {
+                $(".checkBoxClass").prop('checked', true);
+            }
+            if (attrVal) {
+                $(".checkBoxClass").prop('checked', false);
+            }
+
+        });
+
+        var all = [];
+        $("#addMore").click(function() {
+            var checkVal = prompt("Please enter the lable name of the check box");
+
+            $.each($("input[name='number']"), function() {
+                all.push($(this).val());
+            });
+
+            if (checkVal.length != 0) {
+                if ($.inArray(checkVal, all) == -1) {
+                    $("#moreFields").append('<div id="' + checkVal + '"><input type="checkbox" value="' + checkVal + '" name="number"  class="checkBoxClass cb' + checkVal + '" data-id="cb' + checkVal + '" />' + checkVal + '</div>');
+                } else {
+                    alert('Name with checkbox already exits');
+                }
+            } else {
+                alert('Please enter lable name');
+            }
+        });
+
+        $("#removeBtn").click(function() {
+            var removeVal = prompt("Please enter the lable name of the check box to remove");
+            if (removeVal.length != 0) {
+                $("#" + removeVal + "").remove();
+            } else {
+                alert('Please enter lable name');
+            }
+
+        });
+        $("#status").click(function() {
+            var favorite = [];
+            $.each($("input[name='number']:checked"), function() {
+                favorite.push($(this).val());
+            });
+            alert("My favourite Number is: " + favorite.join(", "));
+        });
+    });
+    </script>
+</body>
+
+</html>
